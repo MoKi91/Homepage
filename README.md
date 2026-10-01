@@ -35,3 +35,5 @@ See [docs/test-strategy.md](docs/test-strategy.md).
 ## CI / Deploy
 
 `.github/workflows/ci.yml`: typecheck and build, then Playwright E2E (report uploaded as an artifact), then deploy to GitHub Pages on pushes to `main` only.
+
+Deploy is opt-in: it runs only when the repository variable `DEPLOY_ENABLED` is `true` (Settings → Secrets and variables → Actions → Variables). Enable it after the repo is public and Settings → Pages → Source is set to **GitHub Actions**.

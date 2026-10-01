@@ -54,7 +54,8 @@ jobs:
 
   deploy:
     name: Deploy to GitHub Pages
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    # Opt-in: set repo variable DEPLOY_ENABLED=true once Pages is available (public repo).
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.DEPLOY_ENABLED == 'true'
     needs: [check, e2e]
     runs-on: ubuntu-latest
     permissions:
