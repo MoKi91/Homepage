@@ -1,5 +1,7 @@
 # Homepage
 
+[![CI](https://github.com/MoKi91/Homepage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/MoKi91/Homepage/actions/workflows/ci.yml)
+
 Personal CV site for Moritz Kipp, built with Astro + TypeScript. The repo doubles as a showcase of QA engineering practice.
 
 ## Setup
@@ -29,3 +31,7 @@ Served from GitHub Pages at `/Homepage/`.
 ## Test strategy
 
 See [docs/test-strategy.md](docs/test-strategy.md).
+
+## CI / Deploy
+
+`.github/workflows/ci.yml`: typecheck and build, then Playwright E2E (report uploaded as an artifact), then deploy to GitHub Pages on pushes to `main` only.
