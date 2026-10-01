@@ -16,7 +16,10 @@ export default defineConfig({
     testIdAttribute: 'data-test',
     trace: 'on-first-retry',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'mobile', use: { ...devices['Pixel 7'] } },
+  ],
   webServer: {
     command: `npx astro build && npx astro preview --ignore-lock --port ${PORT}`,
     url: `http://localhost:${PORT}/Homepage/`,
