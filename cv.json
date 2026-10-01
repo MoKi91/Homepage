@@ -1,0 +1,101 @@
+{
+  "name": "Moritz Kipp",
+  "title": "Senior Software Quality Engineer",
+  "location": "Hamburg, Germany",
+  "links": {
+    "email": "m.kipp91@googlemail.com",
+    "linkedin": "linkedin.com/in/moritz-kipp"
+  },
+  "summary": [
+    "Senior Software Quality Engineer with nearly 10 years of experience building and improving quality practices for modern web and mobile applications. Specialized in test automation, Playwright, TypeScript, and end-to-end testing, with hands-on experience in API testing, test strategy, and integrating quality engineering into agile development teams.",
+    "I combine strong technical expertise with a product-focused mindset and a keen understanding of user experience and business requirements. Since 2025, I have been using AI-powered tools, including AI agents and MCPs, to accelerate automation, improve testing efficiency, and streamline QA workflows.",
+    "At Haiilo, I expanded the automated coverage of high-priority regression tests from 0% to 90% using Playwright and TypeScript, significantly improving regression efficiency and release confidence."
+  ],
+  "highlights": [
+    {
+      "metric": "0% → 90%",
+      "label": "Automated coverage of high-priority regression tests at Haiilo (Playwright, TypeScript)"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Haiilo GmbH",
+      "role": "(Senior) Software Quality Engineer",
+      "location": "Hamburg",
+      "start": "2019-01",
+      "end": null
+    },
+    {
+      "company": "Haiilo GmbH",
+      "role": "Software Quality Assurance Working Student",
+      "location": "Hamburg",
+      "start": "2017-11",
+      "end": "2018-12"
+    },
+    {
+      "company": "Academic Work Germany",
+      "role": "Consultant Manager (IT)",
+      "location": "Hamburg",
+      "start": "2017-01",
+      "end": "2017-10"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Mensch-Computer-Interaktion (Human-Computer Interaction)",
+      "institution": "University Hamburg",
+      "location": "Hamburg",
+      "start": "2016-10",
+      "end": "2018-03",
+      "note": "3 semesters completed alongside employment at Haiilo.",
+      "focus": ["Computer Science", "Human-Computer Interaction", "Software Design"]
+    },
+    {
+      "degree": "Bachelor of Science in Business Psychology",
+      "institution": "University of Applied Sciences Osnabrück",
+      "location": "Osnabrück",
+      "start": "2012-09",
+      "end": "2015-09",
+      "grade": "1.8"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Test Automation",
+      "items": ["Playwright", "TypeScript", "CI/CD"]
+    },
+    {
+      "category": "API Testing & Security Testing",
+      "items": ["Postman", "Proxyman", "Burp"]
+    },
+    {
+      "category": "Development of Testing Strategies",
+      "items": ["Release planning", "Agile development", "Leveraging AI tools in QA"]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "ISTQB® Testing with Generative AI (CT-GenAI)",
+      "issuer": "trendig technology services GmbH",
+      "date": "2026-10",
+      "status": "in_preparation"
+    },
+    {
+      "name": "ISTQB® Certified Tester Advanced Level Test Automation Engineer",
+      "issuer": "trendig technology services GmbH",
+      "date": "2024-05",
+      "status": "achieved"
+    },
+    {
+      "name": "ISTQB® Certified Tester Foundation Level",
+      "issuer": "ISTQB",
+      "date": "2019-01",
+      "status": "achieved"
+    }
+  ],
+  "languages": [
+    { "name": "German", "level": 5 },
+    { "name": "English", "level": 5 },
+    { "name": "Spanish", "level": 2 }
+  ]
+}
