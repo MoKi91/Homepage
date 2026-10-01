@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import { cv, formatRange, languageLevel, certificationStatus } from '../lib/cv';
+
+const { name, title, location, links, summary, highlights, experience, education, skills, certifications, languages } = cv;
+const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https://${links.linkedin}`;
+---
+
+<Base title={`${name} – ${title}`} description={summary[0]}>
+  <header class="hero" data-test="hero">
+    <p class="eyebrow" data-test="hero-location">{location}</p>
+    <h1 data-test="hero-name">{name}</h1>
+    <p class="role" data-test="hero-title">{title}</p>
+    <nav aria-label="Contact" class="contact">
+      <a href={`mailto:${links.email}`} data-test="link-email">Email</a>
+      <a href={linkedinUrl} rel="noopener" data-test="link-linkedin">LinkedIn</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section aria-labelledby="h-highlights" data-test="highlights">
+      <h2 id="h-highlights" class="sr-only">Highlight</h2>
+      {highlights.map((h) => (
+        <figure class="highlight" data-test="highlight">
+          <p class="metric">{h.metric}</p>
+          <figcaption>{h.label}</figcaption>
+        </figure>
+      ))}
+    </section>
+
+    <section aria-labelledby="h-about" data-test="about">
+      <h2 id="h-about">About</h2>
+      {summary.map((p) => <p>{p}</p>)}
+    </section>
+
+    <section aria-labelledby="h-experience" data-test="experience">
+      <h2 id="h-experience">Experience</h2>
+      <ol class="list">
+        {experience.map((e) => (
+          <li data-test="experience-item">
+            <h3>{e.role}</h3>
+            <p class="meta">{e.company} · {e.location}</p>
+            <p class="meta" data-test="experience-range">{formatRange(e.start, e.end)}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section aria-labelledby="h-skills" data-test="skills">
+      <h2 id="h-skills">Skills</h2>
+      {skills.map((s) => (
+        <div data-test="skill-group">
+          <h3>{s.category}</h3>
+          <ul class="tags">{s.items.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      ))}
+    </section>
+
+    <section aria-labelledby="h-education" data-test="education">
+      <h2 id="h-education">Education</h2>
+      <ol class="list">
+        {education.map((e) => (
+          <li data-test="education-item">
+            <h3>{e.degree}</h3>
+            <p class="meta">{e.institution} · {e.location}</p>
+            <p class="meta">{formatRange(e.start, e.end)}{e.grade ? ` · Grade ${e.grade}` : ''}</p>
+            {e.note && <p>{e.note}</p>}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section aria-labelledby="h-certifications" data-test="certifications">
+      <h2 id="h-certifications">Certifications</h2>
+      <ul class="list">
+        {certifications.map((c) => (
+          <li data-test="certification-item" data-status={c.status}>
+            <h3>{c.name}</h3>
+            <p class="meta">{c.issuer} · {certificationStatus(c.status, c.date)}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="h-languages" data-test="languages">
+      <h2 id="h-languages">Languages</h2>
+      <ul class="list">
+        {languages.map((l) => (
+          <li data-test="language-item">{l.name} <span class="meta">– {languageLevel(l.level)}</span></li>
+        ))}
+      </ul>
+    </section>
+  </main>
+
+  <footer data-test="footer">
+    <p>© {new Date().getFullYear()} {name}</p>
+  </footer>
+</Base>

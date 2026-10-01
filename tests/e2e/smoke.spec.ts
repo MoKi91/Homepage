@@ -1,0 +1,56 @@
+import { test, expect } from '@playwright/test';
+import cv from '../../src/content/cv.json' with { type: 'json' };
+
+test.describe('CV home page @smoke', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('./');
+  });
+
+  test('loads with the name as the single h1 and a matching title', async ({ page }) => {
+    await expect(page).toHaveTitle(new RegExp(cv.name));
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(cv.name);
+    await expect(page.getByTestId('hero-title')).toHaveText(cv.title);
+    await expect(page.getByTestId('hero-location')).toHaveText(cv.location);
+  });
+
+  test('renders every main section', async ({ page }) => {
+    for (const id of ['highlights', 'about', 'experience', 'skills', 'education', 'certifications', 'languages']) {
+      await expect(page.getByTestId(id)).toBeVisible();
+    }
+  });
+
+  test('renders the headline metric from cv.json', async ({ page }) => {
+    await expect(page.getByTestId('highlight').first()).toContainText(cv.highlights[0].metric);
+  });
+
+  test('renders experience entries in data order, current role as Present', async ({ page }) => {
+    const items = page.getByTestId('experience-item');
+    await expect(items).toHaveCount(cv.experience.length);
+    for (const [i, job] of cv.experience.entries()) {
+      await expect(items.nth(i)).toContainText(job.role);
+      await expect(items.nth(i)).toContainText(job.company);
+    }
+    const currentCount = cv.experience.filter((j) => j.end === null).length;
+    await expect(page.getByTestId('experience-range').filter({ hasText: 'Present' })).toHaveCount(currentCount);
+  });
+
+  test('marks in-preparation certifications distinctly from achieved ones', async ({ page }) => {
+    const items = page.getByTestId('certification-item');
+    await expect(items).toHaveCount(cv.certifications.length);
+    for (const status of ['achieved', 'in_preparation'] as const) {
+      const expected = cv.certifications.filter((c) => c.status === status).length;
+      await expect(page.locator(`[data-test="certification-item"][data-status="${status}"]`)).toHaveCount(expected);
+    }
+    await expect(page.locator('[data-status="in_preparation"]').first()).toContainText('In preparation');
+  });
+
+  test('contact links point to the right targets', async ({ page }) => {
+    await expect(page.getByTestId('link-email')).toHaveAttribute('href', `mailto:${cv.links.email}`);
+    await expect(page.getByTestId('link-linkedin')).toHaveAttribute('href', `https://${cv.links.linkedin}`);
+  });
+
+  test('never exposes private data', async ({ page }) => {
+    const text = await page.locator('body').innerText();
+    expect(text).not.toMatch(/\+?\d[\d\s/-]{8,}\d/); // phone-like numbers
+  });
+});
