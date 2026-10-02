@@ -33,6 +33,11 @@ test.describe('CV home page @smoke', () => {
     }
   });
 
+  test('keeps the CV sections together, with Quality Engineering last and separate', async ({ page }) => {
+    const order = await page.locator('main > section').evaluateAll((els) => els.map((e) => e.getAttribute('data-test')));
+    expect(order).toEqual(['about', 'experience', 'skills', 'education', 'certifications', 'languages', 'quality']);
+  });
+
   test('renders every main section', async ({ page }) => {
     for (const id of ['about', 'experience', 'skills', 'education', 'certifications', 'languages']) {
       await expect(page.getByTestId(id)).toBeVisible();
