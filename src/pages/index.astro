@@ -1,22 +1,38 @@
 ---
+import portrait320 from '../assets/portrait-320.jpg';
+import portrait480 from '../assets/portrait-480.jpg';
 import Base from '../layouts/Base.astro';
 import QualityPanel from '../components/QualityPanel.astro';
 import { cv, formatRange, languageLevel, certificationStatus } from '../lib/cv';
 
-const { name, title, location, links, summary, experience, education, skills, certifications, languages } = cv;
+const { name, title, location, photo, links, summary, experience, education, skills, certifications, languages } = cv;
 const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https://${links.linkedin}`;
 ---
 
 <Base title={`${name} – ${title}`} description={summary[0]}>
   <header class="hero" data-test="hero">
     <div class="hero-inner">
-    <p class="eyebrow" data-test="hero-location">{location}</p>
-    <h1 data-test="hero-name">{name}</h1>
-    <p class="role" data-test="hero-title">{title}</p>
-    <nav aria-label="Contact" class="contact">
-      <a href={`mailto:${links.email}`} data-test="link-email">Email</a>
-      <a href={linkedinUrl} rel="noopener" data-test="link-linkedin">LinkedIn</a>
-    </nav>
+      <img
+        src={portrait320.src}
+        srcset={`${portrait320.src} 320w, ${portrait480.src} 480w`}
+        sizes="(min-width: 48rem) 10rem, 6.5rem"
+        alt={photo.alt}
+        width="160"
+        height="160"
+        fetchpriority="high"
+        decoding="async"
+        class="portrait"
+        data-test="hero-photo"
+      />
+      <div class="hero-text">
+        <p class="eyebrow" data-test="hero-location">{location}</p>
+        <h1 data-test="hero-name">{name}</h1>
+        <p class="role" data-test="hero-title">{title}</p>
+        <nav aria-label="Contact" class="contact">
+          <a href={`mailto:${links.email}`} data-test="link-email">Email</a>
+          <a href={linkedinUrl} rel="noopener" data-test="link-linkedin">LinkedIn</a>
+        </nav>
+      </div>
     </div>
   </header>
 

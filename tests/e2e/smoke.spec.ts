@@ -13,6 +13,26 @@ test.describe('CV home page @smoke', () => {
     await expect(page.getByTestId('hero-location')).toHaveText(cv.location);
   });
 
+  test('shows a loaded, circular portrait next to the name', async ({ page }) => {
+    const photo = page.getByTestId('hero-photo');
+    await expect(photo).toBeVisible();
+    await expect(photo).toHaveAttribute('alt', cv.photo.alt);
+    await expect.poll(() => photo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+    await expect(photo).toHaveCSS('border-radius', '50%');
+    const box = await photo.boundingBox();
+    expect(box?.width).toBe(box?.height);
+    const name = (await page.getByTestId('hero-name').boundingBox())!;
+    const photoBox = box!;
+    if ((page.viewportSize()?.width ?? 0) >= 768) {
+      // Wide layout: beside the name, vertically overlapping it.
+      expect(photoBox.y).toBeLessThan(name.y + name.height);
+      expect(photoBox.y + photoBox.height).toBeGreaterThan(name.y);
+    } else {
+      // Narrow layout: stacked above the name.
+      expect(photoBox.y + photoBox.height).toBeLessThanOrEqual(name.y);
+    }
+  });
+
   test('renders every main section', async ({ page }) => {
     for (const id of ['about', 'experience', 'skills', 'education', 'certifications', 'languages']) {
       await expect(page.getByTestId(id)).toBeVisible();

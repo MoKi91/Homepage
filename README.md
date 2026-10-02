@@ -40,3 +40,7 @@ See [docs/test-strategy.md](docs/test-strategy.md).
 `.github/workflows/ci.yml`: typecheck and build, then Playwright E2E (report uploaded as an artifact) and Lighthouse CI (all categories must be >= 95), then deploy to GitHub Pages on pushes to `main` only. The deployed site includes that run's Playwright report at `/Homepage/reports/playwright/`.
 
 Deploy is opt-in: it runs only when the repository variable `DEPLOY_ENABLED` is `true` (Settings → Secrets and variables → Actions → Variables). Enable it after the repo is public and Settings → Pages → Source is set to **GitHub Actions**.
+
+## Portrait
+
+`src/assets/portrait-320.jpg` and `portrait-480.jpg` are square crops of the source photo (re-encoded, no EXIF/GPS), served as a responsive `srcset`. The full-size original is kept out of the repo (`/private/`, gitignored). Alt text lives in `cv.json` (`photo.alt`).
