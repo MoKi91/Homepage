@@ -11,12 +11,6 @@
     "I combine strong technical expertise with a product-focused mindset and a keen understanding of user experience and business requirements. Since 2025, I have been using AI-powered tools, including AI agents and MCPs, to accelerate automation, improve testing efficiency, and streamline QA workflows.",
     "At Haiilo, I expanded the automated coverage of high-priority regression tests from 0% to 90% using Playwright and TypeScript, significantly improving regression efficiency and release confidence."
   ],
-  "highlights": [
-    {
-      "metric": "0% → 90%",
-      "label": "Automated coverage of high-priority regression tests at Haiilo (Playwright, TypeScript)"
-    }
-  ],
   "experience": [
     {
       "company": "Haiilo GmbH",

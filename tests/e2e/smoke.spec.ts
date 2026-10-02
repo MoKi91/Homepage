@@ -14,13 +14,9 @@ test.describe('CV home page @smoke', () => {
   });
 
   test('renders every main section', async ({ page }) => {
-    for (const id of ['highlights', 'about', 'experience', 'skills', 'education', 'certifications', 'languages']) {
+    for (const id of ['about', 'experience', 'skills', 'education', 'certifications', 'languages']) {
       await expect(page.getByTestId(id)).toBeVisible();
     }
-  });
-
-  test('renders the headline metric from cv.json', async ({ page }) => {
-    await expect(page.getByTestId('highlight').first()).toContainText(cv.highlights[0].metric);
   });
 
   test('renders experience entries in data order, current role as Present', async ({ page }) => {
