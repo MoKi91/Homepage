@@ -46,6 +46,7 @@ const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https:
         <p class="eyebrow" data-test="hero-location">{location}</p>
         <h1 data-test="hero-name">{name}</h1>
         <p class="role" data-test="hero-title">{title}</p>
+        <p class="tagline" data-test="hero-tagline">{description}</p>
         <nav aria-label="Contact" class="contact">
           <a href={`mailto:${links.email}`} data-test="link-email">Email</a>
           <a href={linkedinUrl} rel="noopener" data-test="link-linkedin">LinkedIn</a>
@@ -71,6 +72,12 @@ const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https:
             <h3>{e.role}</h3>
             <p class="meta">{e.company} · {e.location}</p>
             <p class="range" data-test="experience-range">{formatRange(e.start, e.end)}</p>
+            {e.summary && <p class="job-summary" data-test="experience-summary">{e.summary}</p>}
+            {e.bullets && (
+              <ul class="bullets" data-test="experience-bullets">
+                {e.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
           </li>
         ))}
       </ol>

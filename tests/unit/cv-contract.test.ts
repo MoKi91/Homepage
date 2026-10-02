@@ -37,6 +37,15 @@ describe('cv.json contract', () => {
     expect(cv.experience.filter((e) => e.end === null).length).toBeLessThanOrEqual(1);
   });
 
+  it('has achievement bullets that read as full sentences', () => {
+    for (const job of cv.experience) {
+      for (const bullet of job.bullets ?? []) {
+        expect(bullet.length, bullet).toBeGreaterThan(30);
+        expect(bullet.trim().endsWith('.'), bullet).toBe(true);
+      }
+    }
+  });
+
   it('lists experience newest first', () => {
     const starts = cv.experience.map((e) => e.start);
     expect(starts).toEqual([...starts].sort().reverse());
