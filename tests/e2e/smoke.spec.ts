@@ -87,6 +87,15 @@ test.describe('CV home page @smoke', () => {
     await expect(page.getByTestId('link-linkedin')).toHaveAttribute('href', `https://${cv.links.linkedin}`);
   });
 
+  test('"How this site is built" jumps to the Quality Engineering section', async ({ page }) => {
+    const link = page.getByTestId('link-how-built');
+    await expect(link).toHaveAttribute('href', '#quality');
+    await link.click();
+    await expect(page).toHaveURL(/#quality$/);
+    await expect(page.getByTestId('quality')).toBeInViewport();
+    await expect(page.getByRole('heading', { name: 'Quality Engineering', level: 2 })).toBeInViewport();
+  });
+
   test('never exposes private data', async ({ page }) => {
     const text = await page.locator('body').innerText();
     expect(text).not.toMatch(/\+?\d[\d\s/-]{8,}\d/); // phone-like numbers
