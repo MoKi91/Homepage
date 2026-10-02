@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import cv from '../../src/content/cv.json' with { type: 'json' };
 
 test.describe('CV home page @smoke', () => {

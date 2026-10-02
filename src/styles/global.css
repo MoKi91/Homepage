@@ -71,6 +71,18 @@ h3 { font-size: 1.2rem; margin: 0 0 0.15rem; }
   vertical-align: middle;
 }
 
+/* Quality Engineering */
+.qe-links { list-style: none; padding: 0; margin: 1.25rem 0 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+.qe-links a { font-weight: 600; }
+.qe-links img { display: block; min-width: 90px; }
+.body h3 + .pipeline, .body h3 + .risks { margin-top: 0.75rem; }
+.pipeline { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-wrap: wrap; gap: 0.25rem 0; font-size: 0.95rem; }
+.pipeline li { display: flex; align-items: center; }
+.pipeline li:not(:last-child)::after { content: '\2192'; margin: 0 0.25rem 0 0.75rem; color: var(--muted); }
+.risks { margin: 0; display: grid; gap: 1.1rem; }
+.risks dt { font-weight: 600; }
+.risks dd { margin: 0; color: var(--muted); }
+
 footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.9rem; }
 footer p { margin: 0; }
 .skip { position: absolute; left: -999px; }

@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import QualityPanel from '../components/QualityPanel.astro';
 import { cv, formatRange, languageLevel, certificationStatus } from '../lib/cv';
 
 const { name, title, location, links, summary, experience, education, skills, certifications, languages } = cv;
@@ -41,6 +42,8 @@ const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https:
       </ol>
     </div>
     </section>
+
+    <QualityPanel />
 
     <section aria-labelledby="h-skills" data-test="skills">
       <h2 id="h-skills">Skills</h2>

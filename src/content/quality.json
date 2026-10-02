@@ -1,0 +1,31 @@
+{
+  "repo": "MoKi91/Homepage",
+  "intro": "This site is tested like a product. The repository is public, every change goes through a pull request, and the pipeline below runs on each one. Nothing is deployed unless the tests pass.",
+  "pipeline": ["Typecheck", "Unit tests", "Build", "End-to-end tests", "Deploy"],
+  "risks": [
+    {
+      "risk": "Invalid or inconsistent CV data",
+      "coverage": "A schema validates cv.json at build time, and unit tests check date order, the current role and newest-first ordering."
+    },
+    {
+      "risk": "Page does not match the data",
+      "coverage": "End-to-end tests compare what is rendered with cv.json: roles, companies, certifications, dates."
+    },
+    {
+      "risk": "Private data leaking",
+      "coverage": "Contract tests reject phone, birth date and address fields, and phone-like values, in the data and on the rendered page."
+    },
+    {
+      "risk": "Broken contact links",
+      "coverage": "Tests assert the email and LinkedIn targets."
+    },
+    {
+      "risk": "Accessibility regressions",
+      "coverage": "axe-core checks WCAG 2.1 A and AA in light and dark mode, plus landmarks, heading order and keyboard skip link."
+    },
+    {
+      "risk": "Browser and viewport differences",
+      "coverage": "The suite runs on Chromium, WebKit and an emulated Pixel 7, and checks there is no horizontal scrolling."
+    }
+  ]
+}
