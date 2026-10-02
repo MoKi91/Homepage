@@ -1,0 +1,44 @@
+---
+import { quality } from '../lib/quality';
+
+const { repo, intro, pipeline, risks } = quality;
+const base = import.meta.env.BASE_URL;
+const workflow = `https://github.com/${repo}/actions/workflows/ci.yml`;
+---
+
+<section aria-labelledby="h-quality" data-test="quality">
+  <h2 id="h-quality">Quality Engineering</h2>
+  <div class="body">
+    <p>{intro}</p>
+
+    <ul class="qe-links" data-test="quality-links">
+      <li>
+        <a href={workflow} data-test="quality-ci">
+          <img
+            src={`${workflow}/badge.svg?branch=main`}
+            alt="CI status of the main branch"
+            width="90"
+            height="20"
+          />
+        </a>
+      </li>
+      <li><a href={`${base}reports/playwright/`} data-test="quality-report">Latest Playwright report</a></li>
+      <li><a href={`https://github.com/${repo}`} rel="noopener" data-test="quality-repo">Source on GitHub</a></li>
+    </ul>
+
+    <h3>Pipeline</h3>
+    <ol class="pipeline" data-test="quality-pipeline">
+      {pipeline.map((stage) => <li>{stage}</li>)}
+    </ol>
+
+    <h3>Test strategy: what could go wrong, and what catches it</h3>
+    <dl class="risks" data-test="quality-risks">
+      {risks.map((r) => (
+        <div data-test="quality-risk">
+          <dt>{r.risk}</dt>
+          <dd>{r.coverage}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

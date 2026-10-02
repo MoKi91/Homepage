@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Layout', () => {
   for (const colorScheme of ['light', 'dark'] as const) {

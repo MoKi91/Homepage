@@ -26,3 +26,7 @@ Smoke tests carry the `@smoke` tag (`pnpm test:smoke`).
 
 - Unit (Vitest, `tests/unit`): pure functions and the data contract.
 - E2E (Playwright, `tests/e2e`): rendering, links, layout, accessibility.
+
+## Published evidence
+
+The page's Quality Engineering section renders `src/content/quality.json` (risks and pipeline) and links to the live CI badge and to the latest Playwright report. On deploy, CI assembles the Pages artifact from the build plus the Playwright HTML report of the same run, published at `/Homepage/reports/playwright/`. Tests stub the badge request so they never depend on github.com.
