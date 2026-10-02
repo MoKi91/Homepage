@@ -47,6 +47,8 @@ h1 { font-size: clamp(2.75rem, 10vw, 6rem); letter-spacing: -0.02em; margin: 0; 
 .role { font: italic 400 clamp(1.2rem, 3.5vw, 1.75rem)/1.3 var(--serif); color: var(--muted); margin: 0.5rem 0 1rem; }
 .contact { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
 .contact a { font-weight: 600; }
+.site-note { margin: 1rem 0 0; font-size: 0.95rem; }
+#quality { scroll-margin-top: 1.5rem; }
 
 /* Sections: label column + content column */
 main > section { border-top: 1px solid var(--rule); }
@@ -115,22 +117,39 @@ footer p { margin: 0; }
 .skip:focus { left: 0.5rem; top: 0.5rem; background: var(--bg); padding: 0.5rem 1rem; z-index: 1; }
 
 @media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
   a { transition: color 0.15s; }
 }
 
-/* Print: one clean page, URLs visible */
+.print-contact { display: none; }
+.linklike { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.linklike:hover { text-decoration-thickness: 2px; }
+.linklike:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* Print: a compact two-page A4 CV (no Quality Engineering section, contact details as text) */
+@page { size: A4; margin: 14mm 15mm; }
 @media print {
   :root { --bg: #fff; --fg: #000; --muted: #333; --accent: #000; --rule: #999; }
-  body { max-width: none; padding: 0; font-size: 10.5pt; line-height: 1.45; }
-  .skip { display: none; }
-  .hero { padding: 0 0 1rem; }
-  .hero-inner { flex-direction: row-reverse; justify-content: space-between; align-items: center; }
-  .portrait { width: 3cm; height: 3cm; }
-  h1 { font-size: 28pt; }
-  main > section { padding: 1rem 0; break-inside: avoid; }
-  .contact a::after { content: ' (' attr(href) ')'; font-weight: 400; }
-  .tags li { border: 0; padding: 0; }
+  html { font-size: 10pt; }
+  body { max-width: none; padding: 0; font-size: 10pt; line-height: 1.4; }
+  a { color: inherit; text-decoration: none; }
+  .skip, .site-note, .contact, .no-print { display: none !important; }
+  .print-contact { display: block; margin: 0.4rem 0 0; font-size: 9.5pt; }
+  .hero { padding: 0 0 0.6rem; }
+  .hero-inner { flex-direction: row-reverse; justify-content: space-between; align-items: center; gap: 1rem; }
+  .portrait { width: 2.6cm; height: 2.6cm; }
+  h1 { font-size: 24pt; }
+  .role { font-size: 12pt; margin: 0.25rem 0 0.4rem; }
+  .tagline { margin: 0; max-width: none; }
+  main > section { grid-template-columns: 3.2cm minmax(0, 1fr); gap: 0.4rem 1.2rem; padding: 0.7rem 0; }
+  h2 { font-size: 8pt; margin: 0.2rem 0 0; }
+  h3 { font-size: 10.5pt; break-after: avoid; }
+  .body > p:first-child { font-size: inherit; }
+  .list { gap: 0.8rem; }
+  .list > li, [data-test='skill-group'] { break-inside: avoid; }
+  .bullets { margin-top: 0.4rem; gap: 0.2rem; }
+  .tags { gap: 0 0.3rem; margin: 0.1rem 0 0.5rem; }
+  .tags li { border: 0; padding: 0; font-size: inherit; }
   .tags li:not(:last-child)::after { content: ','; }
+  footer { display: none; }
 }
-
-[data-test='languages'] .list { gap: 0.25rem; }

@@ -54,3 +54,7 @@ Title, description, canonical URL, Open Graph/Twitter tags and Person JSON-LD ar
 ## Link check
 
 `.github/workflows/links.yml` runs weekly (Mondays 06:00 UTC) and on demand against the live site. Scheduled workflows on public repos are paused by GitHub after 60 days without repo activity.
+
+## Print as CV
+
+Printing the page (or the "Print or save as PDF" button, shown only with JavaScript) produces a compact two-page A4 CV: the Quality Engineering section and site chrome are hidden, and email/LinkedIn are printed as plain text. Styles live in the `@media print` block and `@page` rule of `src/styles/global.css`; `tests/e2e/print.spec.ts` guards the behaviour, including a two-page limit.

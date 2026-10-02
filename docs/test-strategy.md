@@ -14,6 +14,7 @@ Risk-based: spend test effort where a failure would hurt the site's purpose (a t
 | Browser/viewport differences | Playwright projects: chromium, webkit, mobile (Pixel 7) | M2, M4 |
 | Link rot (external and published links) | Weekly scheduled `Link check` workflow against the deployed site (`pnpm test:links`); LinkedIn's bot-block status 999 is tolerated | M7 |
 | Broken link previews / SEO metadata | E2E checks title, description length, canonical, Open Graph, Twitter card, JSON-LD (no email), and the 1200x630 `og.png` | M7 |
+| Print/PDF CV regressions | E2E in print media: Quality Engineering section and site chrome hidden, contact details as text; `page.pdf()` must stay within two A4 pages (Chromium) | M8 |
 | Visual regressions | Screenshots of key sections | planned |
 | Performance / SEO / best practices | Lighthouse CI (3 runs), every category must be >= 95 or the pipeline fails; scores are published with the site | M6 |
 
