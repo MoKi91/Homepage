@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures';
+import { test, expect, LIGHTHOUSE_STUB } from './fixtures';
 import quality from '../../src/content/quality.json' with { type: 'json' };
 
 test.describe('Quality Engineering section', () => {
@@ -34,4 +34,39 @@ test.describe('Quality Engineering section', () => {
     const box = await page.getByTestId('quality-ci').boundingBox();
     expect(box?.height).toBe(20);
   });
+});
+
+test.describe('Lighthouse scores', () => {
+  test('renders the scores from lighthouse.json with their context', async ({ page }) => {
+    await page.route('**/lighthouse.json', (route) => route.fulfill({ json: LIGHTHOUSE_STUB }));
+    await page.goto('./');
+
+    const block = page.getByTestId('lighthouse');
+    await expect(block).toHaveAttribute('data-state', 'ready');
+    const scores = page.getByTestId('lighthouse-score');
+    await expect(scores).toHaveCount(4);
+    await expect(scores).toContainText(['100', '98', '96', '100']);
+    await expect(scores).toContainText(['Performance', 'Accessibility', 'Best Practices', 'SEO']);
+    await expect(page.getByTestId('lighthouse-meta')).toHaveText(
+      'Median of 3 Lighthouse runs on the deployed build (2026-01-02, commit abc1234).',
+    );
+  });
+
+  test('is hidden while the published file has no scores (placeholder)', async ({ page }) => {
+    await page.goto('./');
+    await expect(page.getByTestId('lighthouse')).toHaveAttribute('data-state', 'unavailable');
+    await expect(page.getByTestId('lighthouse')).toBeHidden();
+  });
+
+  for (const [name, fulfill] of [
+    ['missing', { status: 404, body: 'nope' }],
+    ['malformed', { json: { ...LIGHTHOUSE_STUB, scores: { ...LIGHTHOUSE_STUB.scores, seo: 'high' } } }],
+    ['out of range', { json: { ...LIGHTHOUSE_STUB, scores: { ...LIGHTHOUSE_STUB.scores, seo: 140 } } }],
+  ] as const) {
+    test(`is hidden when lighthouse.json is ${name}`, async ({ page }) => {
+      await page.route('**/lighthouse.json', (route) => route.fulfill(fulfill));
+      await page.goto('./');
+      await expect(page.getByTestId('lighthouse')).toHaveAttribute('data-state', 'unavailable');
+    });
+  }
 });

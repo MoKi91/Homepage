@@ -1,7 +1,14 @@
 {
   "repo": "MoKi91/Homepage",
   "intro": "This site is tested like a product. The repository is public, every change goes through a pull request, and the pipeline below runs on each one. Nothing is deployed unless the tests pass.",
-  "pipeline": ["Typecheck", "Unit tests", "Build", "End-to-end tests", "Deploy"],
+  "pipeline": [
+    "Typecheck",
+    "Unit tests",
+    "Build",
+    "End-to-end tests",
+    "Lighthouse",
+    "Deploy"
+  ],
   "risks": [
     {
       "risk": "Invalid or inconsistent CV data",
@@ -26,6 +33,10 @@
     {
       "risk": "Browser and viewport differences",
       "coverage": "The suite runs on Chromium, WebKit and an emulated Pixel 7, and checks there is no horizontal scrolling."
+    },
+    {
+      "risk": "Performance, SEO and best-practice regressions",
+      "coverage": "Lighthouse CI fails the pipeline if any category drops below 95. The scores above come from that run on the build that gets deployed."
     }
   ]
 }

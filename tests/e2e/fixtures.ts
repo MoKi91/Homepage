@@ -12,4 +12,11 @@ export const test = base.extend({
   },
 });
 
+export const LIGHTHOUSE_STUB = {
+  generatedAt: '2026-01-02T03:04:05.000Z',
+  commit: 'abc1234',
+  runs: 3,
+  scores: { performance: 100, accessibility: 98, bestPractices: 96, seo: 100 },
+};
+
 export { expect } from '@playwright/test';

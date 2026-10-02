@@ -6,3 +6,5 @@ playwright-report
 blob-report
 /private/
 .DS_Store
+lhci-reports
+.lighthouseci

@@ -26,6 +26,28 @@ const workflow = `https://github.com/${repo}/actions/workflows/ci.yml`;
       <li><a href={`https://github.com/${repo}`} rel="noopener" data-test="quality-repo">Source on GitHub</a></li>
     </ul>
 
+    <h3>Lighthouse</h3>
+    <div class="lh" data-test="lighthouse" data-src={`${base}lighthouse.json`} data-state="loading">
+      <ul class="lh-scores">
+        {[
+          ['performance', 'Performance'],
+          ['accessibility', 'Accessibility'],
+          ['bestPractices', 'Best Practices'],
+          ['seo', 'SEO'],
+        ].map(([key, label]) => (
+          <li data-test="lighthouse-score" data-key={key}>
+            <svg class="ring" viewBox="0 0 36 36" aria-hidden="true">
+              <circle class="ring-track" cx="18" cy="18" r="15.9" />
+              <circle class="ring-value" cx="18" cy="18" r="15.9" pathLength="100" stroke-dasharray="0 100" />
+            </svg>
+            <span class="lh-num">&ndash;</span>
+            <span class="lh-label">{label}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="meta lh-meta" data-test="lighthouse-meta"></p>
+    </div>
+
     <h3>Pipeline</h3>
     <ol class="pipeline" data-test="quality-pipeline">
       {pipeline.map((stage) => <li>{stage}</li>)}
@@ -42,3 +64,32 @@ const workflow = `https://github.com/${repo}/actions/workflows/ci.yml`;
     </dl>
   </div>
 </section>
+
+<script>
+  // Progressive enhancement: scores come from the Lighthouse run of the deployed build.
+  const root = document.querySelector<HTMLElement>('[data-test="lighthouse"]');
+
+  async function load(el: HTMLElement) {
+    try {
+      const res = await fetch(el.dataset.src!);
+      const data = await res.json();
+      const scores = data?.scores;
+      if (!res.ok || !scores) throw new Error('no scores');
+      for (const item of el.querySelectorAll<HTMLElement>('[data-key]')) {
+        const value = scores[item.dataset.key!];
+        if (!Number.isInteger(value) || value < 0 || value > 100) throw new Error('bad score');
+        item.querySelector('.lh-num')!.textContent = String(value);
+        item.querySelector('.ring-value')!.setAttribute('stroke-dasharray', `${value} 100`);
+        item.dataset.level = value >= 90 ? 'good' : value >= 50 ? 'ok' : 'poor';
+      }
+      const date = new Date(data.generatedAt).toISOString().slice(0, 10);
+      const commit = data.commit ? `, commit ${data.commit}` : '';
+      el.querySelector('.lh-meta')!.textContent = `Median of ${data.runs} Lighthouse runs on the deployed build (${date}${commit}).`;
+      el.dataset.state = 'ready';
+    } catch {
+      el.dataset.state = 'unavailable';
+    }
+  }
+
+  if (root) load(root);
+</script>
