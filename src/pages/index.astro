@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { cv, formatRange, languageLevel, certificationStatus } from '../lib/cv';
 
-const { name, title, location, links, summary, highlights, experience, education, skills, certifications, languages } = cv;
+const { name, title, location, links, summary, experience, education, skills, certifications, languages } = cv;
 const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https://${links.linkedin}`;
 ---
 
@@ -20,16 +20,6 @@ const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https:
   </header>
 
   <main id="main">
-    <section aria-labelledby="h-highlights" data-test="highlights">
-      <h2 id="h-highlights" class="sr-only">Highlight</h2>
-      {highlights.map((h) => (
-        <figure class="highlight" data-test="highlight">
-          <p class="metric">{h.metric}</p>
-          <figcaption>{h.label}</figcaption>
-        </figure>
-      ))}
-    </section>
-
     <section aria-labelledby="h-about" data-test="about">
       <h2 id="h-about">About</h2>
       <div class="body">

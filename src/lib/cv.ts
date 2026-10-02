@@ -9,7 +9,6 @@ const schema = z.object({
   location: z.string(),
   links: z.object({ email: z.string().email(), linkedin: z.string() }),
   summary: z.array(z.string()).min(1),
-  highlights: z.array(z.object({ metric: z.string(), label: z.string() })),
   experience: z.array(
     z.object({
       company: z.string(),
