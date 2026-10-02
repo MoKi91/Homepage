@@ -15,7 +15,7 @@ Risk-based: spend test effort where a failure would hurt the site's purpose (a t
 | Link rot (external and published links) | Weekly scheduled `Link check` workflow against the deployed site (`pnpm test:links`); LinkedIn's bot-block status 999 is tolerated | M7 |
 | Broken link previews / SEO metadata | E2E checks title, description length, canonical, Open Graph, Twitter card, JSON-LD (no email), and the 1200x630 `og.png` | M7 |
 | Print/PDF CV regressions | E2E in print media: Quality Engineering section and site chrome hidden, contact details as text; `page.pdf()` must stay within two A4 pages (Chromium) | M8 |
-| Visual regressions | Screenshots of key sections | planned |
+| Visual regressions | Screenshot comparison of hero, experience, skills, certifications and Quality Engineering in light, dark and mobile (`tests/visual`), rendered in the pinned Playwright container; a failing diff blocks the deploy | M9 |
 | Performance / SEO / best practices | Lighthouse CI (3 runs), every category must be >= 95 or the pipeline fails; scores are published with the site | M6 |
 
 Conventions: web-first assertions, `data-test` ids via `getByTestId`, no fixed sleeps, no test-order dependencies.
@@ -41,3 +41,11 @@ The page's Quality Engineering section renders `src/content/quality.json` (risks
 ## Link check
 
 `.github/workflows/links.yml` is intentionally separate from CI: it hits third-party hosts, so it runs weekly (and on demand) and never gates a pull request. It was verified to fail by pointing it at a local build where the Playwright report link does not exist.
+
+## Visual regression
+
+`pnpm test:visual` (`playwright.visual.config.ts`) screenshots five sections in three projects (desktop light, desktop dark, mobile light): 15 baselines in `tests/visual/__screenshots__/<project>/`. Inputs are made deterministic: the CI badge is stubbed, the Lighthouse scores come from a fixed stub, animations are disabled, reduced motion is on, and the test waits for fonts and the portrait. Tolerance is `maxDiffPixelRatio: 0.002`.
+
+The site uses system fonts on purpose, so pixels depend on the OS. Baselines are therefore rendered **only** in the pinned `mcr.microsoft.com/playwright:v1.63.0-noble` container (CI job `visual`); locally the tests skip unless `VISUAL_TESTS=1`. The image tag must match the `@playwright/test` version. Verified in that container: the first run writes the baselines, a second run passes, and changing the accent colour fails the hero and Quality Engineering screenshots.
+
+**Updating baselines after an intentional visual change:** run the `Update visual baselines` workflow (Actions tab, on your branch), then `gh run download <run-id> -n visual-baselines -D tests/visual/__screenshots__`, review the images in the diff, and commit them.

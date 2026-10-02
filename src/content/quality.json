@@ -6,6 +6,7 @@
     "Unit tests",
     "Build",
     "End-to-end tests",
+    "Visual regression",
     "Lighthouse",
     "Deploy"
   ],
@@ -29,6 +30,10 @@
     {
       "risk": "Links that break over time",
       "coverage": "A scheduled workflow checks every link and image on the deployed page each week, outside the pull request pipeline so a third-party outage cannot block a merge."
+    },
+    {
+      "risk": "Unintended visual changes",
+      "coverage": "Screenshots of the hero, experience, skills, certifications and Quality Engineering sections are compared with approved baselines in light, dark and mobile, rendered in a pinned Playwright container so the pixels are reproducible."
     },
     {
       "risk": "Accessibility regressions",
