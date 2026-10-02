@@ -51,7 +51,11 @@ const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https:
           <a href={`mailto:${links.email}`} data-test="link-email">Email</a>
           <a href={linkedinUrl} rel="noopener" data-test="link-linkedin">LinkedIn</a>
         </nav>
-        <p class="site-note"><a href="#quality" data-test="link-how-built">How this site is built <span aria-hidden="true">&darr;</span></a></p>
+        <p class="print-contact" data-test="print-contact">{links.email} &middot; {links.linkedin}</p>
+        <p class="site-note">
+          <a href="#quality" data-test="link-how-built">How this site is built <span aria-hidden="true">&darr;</span></a>
+          <span class="print-action" hidden> &middot; <button type="button" class="linklike" data-test="print-cv">Print or save as PDF</button></span>
+        </p>
       </div>
     </div>
   </header>
@@ -145,3 +149,12 @@ const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https:
     <p>© {new Date().getFullYear()} {name}</p>
   </footer>
 </Base>
+
+<script>
+  // Progressive enhancement: the button only exists for visitors with JavaScript.
+  const action = document.querySelector<HTMLElement>('.print-action');
+  if (action) {
+    action.hidden = false;
+    action.querySelector('button')?.addEventListener('click', () => window.print());
+  }
+</script>
