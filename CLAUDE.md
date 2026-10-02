@@ -1,4 +1,4 @@
-# Project: Personal CV site for Moritz Kipp (Senior Software Quality Engineer)
+# Project: Personal CV site for Moritz Kipp (Software Quality Engineer)
 
 ## Goal
 Fast, accessible, static CV/portfolio site that also *demonstrates* QA

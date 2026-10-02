@@ -3,9 +3,8 @@
 Open items, roughly in priority order. One PR each.
 
 1. **Print as CV**: a print stylesheet tuned as a proper one- or two-page CV (compact type, page-break rules, contact details with URLs, optionally without the Quality Engineering section) plus a "Print or save as PDF" hint on the page.
-2. **Headline title decision**: the hero, page title, link preview and structured data say "Senior Software Quality Engineer", while the current role is "Software Quality Engineer".
-3. German version (`de`); the data structure already allows it.
-4. Visual-regression screenshots of key sections.
-5. Dependabot for dependency updates.
-6. Custom domain (`astro.config.mjs`, canonical/OG constants in `tests/e2e/seo.spec.ts`).
-7. Experience bullets for the working-student role, if there are concrete achievements to list.
+2. German version (`de`); the data structure already allows it.
+3. Visual-regression screenshots of key sections.
+4. Dependabot for dependency updates.
+5. Custom domain (`astro.config.mjs`, canonical/OG constants in `tests/e2e/seo.spec.ts`).
+6. Experience bullets for the working-student role, if there are concrete achievements to list.
