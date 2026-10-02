@@ -55,6 +55,23 @@ test.describe('CV home page @smoke', () => {
     await expect(page.getByTestId('experience-range').filter({ hasText: 'Present' })).toHaveCount(currentCount);
   });
 
+  test('shows the tagline in the hero', async ({ page }) => {
+    await expect(page.getByTestId('hero-tagline')).toHaveText(cv.description);
+  });
+
+  test('renders each role\'s summary and achievements bullets from cv.json', async ({ page }) => {
+    const items = page.getByTestId('experience-item');
+    for (const [i, job] of cv.experience.entries()) {
+      const item = items.nth(i);
+      if ('bullets' in job) {
+        await expect(item.getByTestId('experience-bullets').getByRole('listitem')).toHaveText(job.bullets as string[]);
+      } else {
+        await expect(item.getByTestId('experience-bullets')).toHaveCount(0);
+      }
+      if ('summary' in job) await expect(item.getByTestId('experience-summary')).toHaveText(job.summary as string);
+    }
+  });
+
   test('marks in-preparation certifications distinctly from achieved ones', async ({ page }) => {
     const items = page.getByTestId('certification-item');
     await expect(items).toHaveCount(cv.certifications.length);

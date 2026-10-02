@@ -18,6 +18,8 @@ const schema = z.object({
       location: z.string(),
       start: month,
       end: month.nullable(),
+      summary: z.string().min(1).optional(),
+      bullets: z.array(z.string().min(1)).min(1).optional(),
     }),
   ),
   education: z.array(
