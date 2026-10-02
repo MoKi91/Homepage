@@ -27,6 +27,10 @@
       "coverage": "Tests assert the email and LinkedIn targets."
     },
     {
+      "risk": "Links that break over time",
+      "coverage": "A scheduled workflow checks every link and image on the deployed page each week, outside the pull request pipeline so a third-party outage cannot block a merge."
+    },
+    {
       "risk": "Accessibility regressions",
       "coverage": "axe-core checks WCAG 2.1 A and AA in light and dark mode, plus landmarks, heading order and keyboard skip link."
     },

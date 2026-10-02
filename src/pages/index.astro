@@ -5,11 +5,29 @@ import Base from '../layouts/Base.astro';
 import QualityPanel from '../components/QualityPanel.astro';
 import { cv, formatRange, languageLevel, certificationStatus } from '../lib/cv';
 
-const { name, title, location, photo, links, summary, experience, education, skills, certifications, languages } = cv;
+const { name, title, description, location, photo, links, summary, experience, education, skills, certifications, languages } = cv;
+const base = import.meta.env.BASE_URL;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name,
+  jobTitle: title,
+  description,
+  address: { '@type': 'PostalAddress', addressLocality: location.split(',')[0].trim(), addressCountry: 'DE' },
+  url: new URL(base, Astro.site).href,
+  image: new URL(`${base}og.png`, Astro.site).href,
+  sameAs: [links.linkedin.startsWith('http') ? links.linkedin : `https://${links.linkedin}`],
+};
 const linkedinUrl = links.linkedin.startsWith('http') ? links.linkedin : `https://${links.linkedin}`;
 ---
 
-<Base title={`${name} – ${title}`} description={summary[0]}>
+<Base
+  title={`${name} – ${title}`}
+  description={description}
+  image={`${base}og.png`}
+  imageAlt={`${name}, ${title}`}
+  structuredData={structuredData}
+>
   <header class="hero" data-test="hero">
     <div class="hero-inner">
       <img

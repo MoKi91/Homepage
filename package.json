@@ -12,6 +12,8 @@
     "test": "vitest run && playwright test",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "og": "node scripts/generate-og.mjs",
+    "test:links": "playwright test -c playwright.links.config.ts",
     "lighthouse": "lhci autorun && node scripts/lighthouse-summary.mjs",
     "test:smoke": "playwright test --grep @smoke"
   },

@@ -12,6 +12,8 @@ Risk-based: spend test effort where a failure would hurt the site's purpose (a t
 | Date/label formatting bugs | Vitest unit tests for `formatRange`, `languageLevel`, `certificationStatus` | M4 |
 | Accessibility regressions | axe-core (WCAG 2.1 A/AA, light and dark), landmark and heading-order checks | M4 |
 | Browser/viewport differences | Playwright projects: chromium, webkit, mobile (Pixel 7) | M2, M4 |
+| Link rot (external and published links) | Weekly scheduled `Link check` workflow against the deployed site (`pnpm test:links`); LinkedIn's bot-block status 999 is tolerated | M7 |
+| Broken link previews / SEO metadata | E2E checks title, description length, canonical, Open Graph, Twitter card, JSON-LD (no email), and the 1200x630 `og.png` | M7 |
 | Visual regressions | Screenshots of key sections | planned |
 | Performance / SEO / best practices | Lighthouse CI (3 runs), every category must be >= 95 or the pipeline fails; scores are published with the site | M6 |
 
@@ -34,3 +36,7 @@ The page's Quality Engineering section renders `src/content/quality.json` (risks
 ## Lighthouse
 
 `pnpm lighthouse` runs Lighthouse CI against the built site (`lighthouserc.json`) and reduces the median run to `lhci-reports/lighthouse.json`. In CI the deploy job publishes that file as `/Homepage/lighthouse.json`; the page reads it to draw the score rings and hides them if it is missing or invalid. The committed `public/lighthouse.json` is a placeholder (`{ "scores": null }`) so local runs and Lighthouse itself never see a 404. Fixing the first run's only finding (missing favicon, logged as a console error) took Best Practices from 96 to 100.
+
+## Link check
+
+`.github/workflows/links.yml` is intentionally separate from CI: it hits third-party hosts, so it runs weekly (and on demand) and never gates a pull request. It was verified to fail by pointing it at a local build where the Playwright report link does not exist.

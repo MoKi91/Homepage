@@ -7,6 +7,7 @@ const schema = z.object({
   name: z.string(),
   title: z.string(),
   location: z.string(),
+  description: z.string().min(50).max(160),
   photo: z.object({ alt: z.string().min(1) }),
   links: z.object({ email: z.string().email(), linkedin: z.string() }),
   summary: z.array(z.string()).min(1),
