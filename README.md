@@ -10,7 +10,7 @@ Requires Node 22 and pnpm.
 
 ```bash
 pnpm install
-pnpm exec playwright install chromium
+pnpm exec playwright install chromium webkit
 ```
 
 ## Scripts
@@ -21,7 +21,9 @@ pnpm exec playwright install chromium
 | `pnpm build` | Static build to `dist/` (validates `cv.json`) |
 | `pnpm preview` | Serve the build |
 | `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm test` / `pnpm test:smoke` | Playwright (builds and serves the site itself) |
+| `pnpm test` | Unit tests, then E2E |
+| `pnpm test:unit` | Vitest (`tests/unit`) |
+| `pnpm test:e2e` / `pnpm test:smoke` | Playwright (builds and serves the site itself) |
 
 ## Architecture
 
