@@ -25,6 +25,7 @@ pnpm exec playwright install chromium webkit
 | `pnpm test:unit` | Vitest (`tests/unit`) |
 | `pnpm og` | Regenerate `public/og.png` (1200x630 link preview) from `cv.json` and the portrait |
 | `pnpm test:links` | Link check against the deployed site (`LINK_CHECK_URL` to override) |
+| `pnpm test:visual` | Screenshot comparison (CI only by default; `VISUAL_TESTS=1` to force, see below) |
 | `pnpm lighthouse` | Lighthouse CI on the built site (needs Chrome; set `CHROME_PATH` if not found) |
 | `pnpm test:e2e` / `pnpm test:smoke` | Playwright (builds and serves the site itself) |
 
@@ -58,3 +59,7 @@ Title, description, canonical URL, Open Graph/Twitter tags and Person JSON-LD ar
 ## Print as CV
 
 Printing the page (or the "Print or save as PDF" button, shown only with JavaScript) produces a compact two-page A4 CV: the Quality Engineering section and site chrome are hidden, and email/LinkedIn are printed as plain text. Styles live in the `@media print` block and `@page` rule of `src/styles/global.css`; `tests/e2e/print.spec.ts` guards the behaviour, including a two-page limit.
+
+## Visual regression
+
+Key sections are compared against committed baselines (`tests/visual/__screenshots__`). They are rendered in CI inside the pinned Playwright container, so local runs skip. To update them after an intentional change, run the "Update visual baselines" workflow and commit the downloaded images; details in [docs/test-strategy.md](docs/test-strategy.md#visual-regression).

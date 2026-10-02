@@ -55,6 +55,40 @@ jobs:
           path: playwright-report/
           retention-days: 14
 
+  visual:
+    name: Visual regression
+    runs-on: ubuntu-latest
+    needs: check
+    # Keep the image tag in step with the @playwright/test version in package.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    env:
+      HOME: /root
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:visual
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: visual-snapshots
+          path: tests/visual/__screenshots__/
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: visual-diff-report
+          path: |
+            playwright-report-visual/
+            test-results/
+          retention-days: 14
+
   lighthouse:
     name: Lighthouse (>= 95)
     runs-on: ubuntu-latest
@@ -88,7 +122,7 @@ jobs:
     name: Deploy to GitHub Pages
     # Opt-in: set repo variable DEPLOY_ENABLED=true once Pages is available (public repo).
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.DEPLOY_ENABLED == 'true'
-    needs: [check, e2e, lighthouse]
+    needs: [check, e2e, visual, lighthouse]
     runs-on: ubuntu-latest
     permissions:
       pages: write

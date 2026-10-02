@@ -1,0 +1,31 @@
+name: Update visual baselines
+
+# Re-renders the screenshot baselines in the same pinned container CI uses and uploads them as an artifact.
+# Download and commit them: gh run download <run-id> -n visual-baselines -D tests/visual/__screenshots__
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+    env:
+      HOME: /root
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:visual:update
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines
+          path: tests/visual/__screenshots__/
+          retention-days: 14

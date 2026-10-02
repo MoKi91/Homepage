@@ -12,6 +12,8 @@
     "test": "vitest run && playwright test",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "test:visual": "playwright test -c playwright.visual.config.ts",
+    "test:visual:update": "playwright test -c playwright.visual.config.ts --update-snapshots",
     "og": "node scripts/generate-og.mjs",
     "test:links": "playwright test -c playwright.links.config.ts",
     "lighthouse": "lhci autorun && node scripts/lighthouse-summary.mjs",
