@@ -18,7 +18,9 @@ test.describe('Layout', () => {
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(20, 19, 15)');
   });
 
-  test('skip link becomes visible on keyboard focus and targets main', async ({ page }) => {
+  test('skip link becomes visible on keyboard focus and targets main', async ({ page, browserName }) => {
+    // Safari/WebKit leaves links out of the Tab order by default (needs Option+Tab or a system setting).
+    test.skip(browserName === 'webkit', 'WebKit does not Tab to links by default');
     await page.goto('./');
     await page.keyboard.press('Tab');
     const skip = page.getByRole('link', { name: 'Skip to content' });
