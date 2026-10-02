@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { test, expect } from './fixtures';
+import { test, expect, LIGHTHOUSE_STUB } from './fixtures';
 
 const WCAG_21_AA = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
@@ -12,6 +12,14 @@ test.describe('Accessibility (WCAG 2.1 AA)', () => {
       expect(results.violations).toEqual([]);
     });
   }
+
+  test('score rings pass axe once scores are shown', async ({ page }) => {
+    await page.route('**/lighthouse.json', (route) => route.fulfill({ json: LIGHTHOUSE_STUB }));
+    await page.goto('./');
+    await expect(page.getByTestId('lighthouse')).toHaveAttribute('data-state', 'ready');
+    const results = await new AxeBuilder({ page }).include('[data-test="lighthouse"]').withTags(WCAG_21_AA).analyze();
+    expect(results.violations).toEqual([]);
+  });
 
   test('has landmarks and a logical heading order', async ({ page }) => {
     await page.goto('./');

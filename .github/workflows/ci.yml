@@ -55,11 +55,40 @@ jobs:
           path: playwright-report/
           retention-days: 14
 
+  lighthouse:
+    name: Lighthouse (>= 95)
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+      - run: pnpm lighthouse
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: lighthouse-reports
+          path: lhci-reports/
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-summary
+          path: lhci-reports/lighthouse.json
+          retention-days: 1
+
   deploy:
     name: Deploy to GitHub Pages
     # Opt-in: set repo variable DEPLOY_ENABLED=true once Pages is available (public repo).
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.DEPLOY_ENABLED == 'true'
-    needs: [check, e2e]
+    needs: [check, e2e, lighthouse]
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -76,6 +105,10 @@ jobs:
         with:
           name: playwright-report
           path: site/reports/playwright
+      - uses: actions/download-artifact@v4
+        with:
+          name: lighthouse-summary
+          path: site
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

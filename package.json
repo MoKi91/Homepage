@@ -12,6 +12,7 @@
     "test": "vitest run && playwright test",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "lighthouse": "lhci autorun && node scripts/lighthouse-summary.mjs",
     "test:smoke": "playwright test --grep @smoke"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.63.0",
     "typescript": "^7.0.2",
     "vitest": "^5.0.3"

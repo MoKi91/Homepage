@@ -83,6 +83,22 @@ h3 { font-size: 1.2rem; margin: 0 0 0.15rem; }
 .risks dt { font-weight: 600; }
 .risks dd { margin: 0; color: var(--muted); }
 
+/* Lighthouse rings: space is reserved up front so late data causes no layout shift */
+.lh { margin: 0.75rem 0 2rem; min-height: 9.5rem; }
+.lh[data-state='unavailable'] { display: none; }
+.lh[data-state='loading'] .lh-scores { visibility: hidden; }
+.lh-scores { list-style: none; padding: 0; margin: 0 0 0.75rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: 1rem; }
+.lh-scores li { position: relative; display: grid; justify-items: center; gap: 0.35rem; }
+.ring { width: 4.5rem; height: 4.5rem; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 3; }
+.ring-track { stroke: var(--rule); }
+.ring-value { stroke: var(--accent); stroke-linecap: round; }
+[data-level='ok'] .ring-value { stroke: #b36b00; }
+[data-level='poor'] .ring-value { stroke: #b3261e; }
+.lh-num { position: absolute; top: 0; left: 50%; margin-left: -2.25rem; width: 4.5rem; height: 4.5rem; display: grid; place-items: center; font: 600 1.35rem/1 var(--serif); font-variant-numeric: tabular-nums; }
+.lh-label { font-size: 0.85rem; color: var(--muted); text-align: center; }
+.lh-meta { font-size: 0.85rem; }
+
 footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.9rem; }
 footer p { margin: 0; }
 .skip { position: absolute; left: -999px; }
